@@ -8,8 +8,8 @@ Unknown processor
 
 
 ```
-|             Method |     Mean |    Error |   StdDev |   Median | Ratio | RatioSD |    Gen0 |    Gen1 | Allocated | Alloc Ratio |
-|------------------- |---------:|---------:|---------:|---------:|------:|--------:|--------:|--------:|----------:|------------:|
-| UseSingletonClient | 12.05 ms | 1.104 ms | 3.220 ms | 11.09 ms |  0.64 |    0.23 |       - |       - |  42.09 KB |        0.16 |
-| UseTransientClient | 19.89 ms | 1.416 ms | 3.949 ms | 19.14 ms |  1.00 |    0.00 | 62.5000 | 31.2500 | 262.62 KB |        1.00 |
-|    UsePooledClient | 11.72 ms | 0.621 ms | 1.802 ms | 11.35 ms |  0.61 |    0.15 |       - |       - |  42.84 KB |        0.16 |
+|             Method |     Mean |    Error |   StdDev | Ratio | RatioSD |    Gen0 | Allocated | Alloc Ratio |
+|------------------- |---------:|---------:|---------:|------:|--------:|--------:|----------:|------------:|
+| UseSingletonClient | 10.06 ms | 0.322 ms | 0.928 ms |  0.51 |    0.12 |       - |  41.95 KB |        0.16 |
+| UseTransientClient | 20.58 ms | 1.698 ms | 4.952 ms |  1.00 |    0.00 | 76.9231 | 263.19 KB |        1.00 |
+|    UsePooledClient | 10.46 ms | 0.280 ms | 0.813 ms |  0.53 |    0.12 |       - |     43 KB |        0.16 |
