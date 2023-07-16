@@ -1,0 +1,66 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  basichttpwcfbenchmarks:
+    build:
+      context: "/Users/muhammadadnanrafiq/RiderProjects/BasicHttpWcfProfiling"
+      dockerfile: "BasicHttpWcfBenchmarks/Dockerfile"
+      target: "build"
+    command: []
+    entrypoint:
+    - "/riderDebugger/linux-arm64/dotnet/dotnet"
+    - "/riderDebugger/JetBrains.Debugger.Worker.exe"
+    - "--mode=server"
+    - "--frontend-port=57100"
+    - "--backend-port=57300"
+    environment:
+      DOTNET_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      NUGET_PACKAGES: "/Users/muhammadadnanrafiq/.nuget/packages"
+      NUGET_FALLBACK_PACKAGES: "/Users/muhammadadnanrafiq/.nuget/packages"
+      RIDER_DEBUGGER_LOG_DIR: "/riderLogs"
+      RESHARPER_LOG_CONF: "/riderLogsConf/backend-log.xml"
+    image: "basichttpwcfbenchmarks:dev"
+    ports:
+    - "127.0.0.1:57012:57100"
+    - "127.0.0.1:57212:57300"
+    volumes:
+    - "/Users/muhammadadnanrafiq/.nuget/packages:/root/.nuget/fallbackpackages"
+    - "/Users/muhammadadnanrafiq/RiderProjects/BasicHttpWcfProfiling/BasicHttpWcfBenchmarks:/app:rw"
+    - "/Users/muhammadadnanrafiq/RiderProjects/BasicHttpWcfProfiling:/src:rw"
+    - "/Users/muhammadadnanrafiq/.local/share/JetBrains/RiderRemoteDebugger/2023.2EAP9/LinuxArm64:/riderDebugger"
+    - "/Users/muhammadadnanrafiq/Library/Application Support/JetBrains/Toolbox/apps/Rider/ch-1/232.8660.64/Rider\
+      \ EAP.app/Contents/bin:/riderLogsConf"
+    - "/Users/muhammadadnanrafiq/Library/Logs/JetBrains/Rider2023.2/DebuggerWorker/JetBrains.Debugger.Worker.2023_7_15_21_18_19:/riderLogs:rw"
+    working_dir: "/app"
+  pingservice:
+    build:
+      context: "/Users/muhammadadnanrafiq/RiderProjects/BasicHttpWcfProfiling"
+      dockerfile: "PingService/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "/riderDebugger/linux-arm64/dotnet/dotnet"
+    - "/riderDebugger/JetBrains.Debugger.Worker.exe"
+    - "--mode=server"
+    - "--frontend-port=57100"
+    - "--backend-port=57300"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+      NUGET_PACKAGES: "/Users/muhammadadnanrafiq/.nuget/packages"
+      NUGET_FALLBACK_PACKAGES: "/Users/muhammadadnanrafiq/.nuget/packages"
+      RIDER_DEBUGGER_LOG_DIR: "/riderLogs"
+      RESHARPER_LOG_CONF: "/riderLogsConf/backend-log.xml"
+    image: "pingservice:dev"
+    ports:
+    - "127.0.0.1:57013:57100"
+    - "127.0.0.1:57213:57300"
+    volumes:
+    - "/Users/muhammadadnanrafiq/.nuget/packages:/root/.nuget/fallbackpackages"
+    - "/Users/muhammadadnanrafiq/RiderProjects/BasicHttpWcfProfiling/PingService:/app:rw"
+    - "/Users/muhammadadnanrafiq/RiderProjects/BasicHttpWcfProfiling:/src:rw"
+    - "/Users/muhammadadnanrafiq/.local/share/JetBrains/RiderRemoteDebugger/2023.2EAP9/LinuxArm64:/riderDebugger"
+    - "/Users/muhammadadnanrafiq/Library/Application Support/JetBrains/Toolbox/apps/Rider/ch-1/232.8660.64/Rider\
+      \ EAP.app/Contents/bin:/riderLogsConf"
+    - "/Users/muhammadadnanrafiq/Library/Logs/JetBrains/Rider2023.2/DebuggerWorker/JetBrains.Debugger.Worker.2023_7_15_21_18_19:/riderLogs:rw"
+    working_dir: "/app"

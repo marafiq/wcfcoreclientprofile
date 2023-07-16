@@ -1,0 +1,18 @@
+﻿services:
+  pingservice:
+    image: pingservice
+    build:
+      context: .
+      dockerfile: PingService/Dockerfile
+    ports:
+      - "5002:80"
+  basichttpwcfbenchmarks:
+    image: basichttpwcfbenchmarks
+    depends_on: 
+      - pingservice
+    build:
+      context: .
+      dockerfile: BasicHttpWcfBenchmarks/Dockerfile
+    
+
+  
