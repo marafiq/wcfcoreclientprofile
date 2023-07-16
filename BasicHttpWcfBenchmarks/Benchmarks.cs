@@ -10,6 +10,12 @@ namespace BasicHttpWcfBenchmarks
     public class Benchmarks
     {
         static readonly PingServiceClient StaticPingServiceClient = new();
+
+        [GlobalSetup]
+        public void GlobalSetup()
+        {
+            
+        }
         [Benchmark]
         public void UseSingletonClient()
         {
@@ -34,7 +40,7 @@ namespace BasicHttpWcfBenchmarks
         }
         
         private readonly ObjectPool<PingServiceClient> _pool =
-            new DefaultObjectPool<PingServiceClient>(new DefaultPooledObjectPolicy<PingServiceClient>());
+            new DefaultObjectPool<PingServiceClient>(new DefaultPooledObjectPolicy<PingServiceClient>(),32);
         [Benchmark]
         public void UsePooledClient()
         {
