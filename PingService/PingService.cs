@@ -4,8 +4,7 @@ public class PingService : IPingService
 {
     public string GetData(int value)
     {
-        Thread.Sleep(5);
+        Thread.Sleep(10);
         return $"Replying to your Ping - {value} with Pong.";
     }
-
 }

@@ -1,18 +1,19 @@
 ﻿services:
   pingservice:
     image: pingservice
+    user: root
     build:
       context: .
       dockerfile: PingService/Dockerfile
     ports:
       - "5002:80"
-  basichttpwcfbenchmarks:
-    image: basichttpwcfbenchmarks
-    depends_on: 
+  webapiconsumingbasichttp:
+    image: webapiconsumingbasichttp
+    user: root
+    depends_on:
       - pingservice
     build:
       context: .
-      dockerfile: BasicHttpWcfBenchmarks/Dockerfile
-    
-
-  
+      dockerfile: WebApiConsumingBasicHttp/Dockerfile
+    ports:
+      - "5003:80"

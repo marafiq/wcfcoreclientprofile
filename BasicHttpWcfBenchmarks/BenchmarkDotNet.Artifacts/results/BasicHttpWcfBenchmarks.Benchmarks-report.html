@@ -2,7 +2,7 @@
 <html lang='en'>
 <head>
 <meta charset='utf-8' />
-<title>BasicHttpWcfBenchmarks.Benchmarks-20230716-013453</title>
+<title>BasicHttpWcfBenchmarks.Benchmarks-20230719-043931</title>
 
 <style type="text/css">
 	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
@@ -14,19 +14,18 @@
 <body>
 <pre><code>
 BenchmarkDotNet v0.13.6, Debian GNU/Linux 11 (bullseye) (container)
-Unknown processor
-.NET SDK 7.0.306
-  [Host]     : .NET 7.0.9 (7.0.923.32018), Arm64 RyuJIT AdvSIMD [AttachedDebugger]
-  DefaultJob : .NET 7.0.9 (7.0.923.32018), Arm64 RyuJIT AdvSIMD
+12th Gen Intel Core i7-1265U, 1 CPU, 12 logical and 6 physical cores
+.NET SDK 7.0.304
+  [Host]     : .NET 7.0.7 (7.0.723.27404), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.7 (7.0.723.27404), X64 RyuJIT AVX2
 </code></pre>
 <pre><code></code></pre>
 
 <table>
-<thead><tr><th>      Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>Ratio</th><th>RatioSD</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
+<thead><tr><th>Method</th><th>Mean</th><th>Error</th><th>StdDev</th><th>StdErr</th><th>Min</th><th>Q1</th><th>Median</th><th>Q3</th><th>Max</th><th>Op/s</th><th>Completed Work Items</th><th>Lock Contentions</th><th>Allocated</th>
 </tr>
-</thead><tbody><tr><td>UseSingletonClient</td><td>10.06 ms</td><td>0.322 ms</td><td>0.928 ms</td><td>0.51</td><td>0.12</td><td>-</td><td>41.95 KB</td><td>0.16</td>
-</tr><tr><td>UseTransientClient</td><td>20.58 ms</td><td>1.698 ms</td><td>4.952 ms</td><td>1.00</td><td>0.00</td><td>76.9231</td><td>263.19 KB</td><td>1.00</td>
-</tr><tr><td>UsePooledClient</td><td>10.46 ms</td><td>0.280 ms</td><td>0.813 ms</td><td>0.53</td><td>0.12</td><td>-</td><td>43 KB</td><td>0.16</td>
+</thead><tbody><tr><td>Singleton</td><td>1.154 ms</td><td>0.0103 ms</td><td>0.0096 ms</td><td>0.0025 ms</td><td>1.137 ms</td><td>1.148 ms</td><td>1.154 ms</td><td>1.159 ms</td><td>1.171 ms</td><td>866.6</td><td>0.2000</td><td>-</td><td>274 B</td>
+</tr><tr><td>Pooled</td><td>1.147 ms</td><td>0.0045 ms</td><td>0.0040 ms</td><td>0.0011 ms</td><td>1.140 ms</td><td>1.143 ms</td><td>1.147 ms</td><td>1.151 ms</td><td>1.152 ms</td><td>871.9</td><td>0.2000</td><td>-</td><td>273 B</td>
 </tr></tbody></table>
 </body>
 </html>
