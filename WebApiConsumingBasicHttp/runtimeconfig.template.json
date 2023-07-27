@@ -1,9 +1,9 @@
 ﻿{
   
     "configProperties": {
-      "System.Threading.ThreadPool.MinThreads": 1000,
-      "System.Threading.ThreadPool.MaxThreads": 2000,
-      "System.Threading.ThreadPool.Blocking.ThreadsToAddWithoutDelay_ProcCountFactor": 500,
+      "System.Threading.ThreadPool.MinThreads": 2,
+      "System.Threading.ThreadPool.MaxThreads": 4,
+      "System.Threading.ThreadPool.Blocking.ThreadsToAddWithoutDelay_ProcCountFactor": 2,
       "System.GC.Server": true,
       "System.Net.Http.SocketsHttpHandler.Http2Support": true
       

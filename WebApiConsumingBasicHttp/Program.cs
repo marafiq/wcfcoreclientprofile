@@ -1,8 +1,4 @@
-using System.ServiceModel;
-using Microsoft.AspNetCore.Connections;
-using Microsoft.Extensions.ObjectPool;
 using Nito.AsyncEx;
-using WebApiConsumingBasicHttp.PingService;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddConsole();
@@ -11,18 +7,27 @@ builder.WebHost.ConfigureKestrel(options =>
     options.AllowSynchronousIO = true;
     options.ListenAnyIP(80);
 });
+ThreadPool.SetMinThreads(2, 2);
+ThreadPool.SetMaxThreads(4, 4);
+ThreadPool.GetAvailableThreads(out var workerThreads,out var completionPortThreads);
+Console.WriteLine(workerThreads);
+Console.WriteLine(completionPortThreads);
 
 builder.Services.AddSingleton<ObjectPool<PingServiceClient>>(_ =>
     new DefaultObjectPool<PingServiceClient>(new PoolPolicy()));
+
 builder.Services.AddSingleton<PingServiceClient>(_ =>
     new PingServiceClient(new BasicHttpBinding(BasicHttpSecurityMode.None)
         {
-            SendTimeout = TimeSpan.FromMinutes(5),
-            ReceiveTimeout = TimeSpan.FromMinutes(5)
+            SendTimeout = TimeSpan.FromMilliseconds(1200),
+            ReceiveTimeout = TimeSpan.FromMilliseconds(1200)
         },
         new EndpointAddress("http://pingservice/ping")));
+
 var app = builder.Build();
+
 ClientBase<IPingService>.CacheSetting = CacheSetting.AlwaysOn;
+
 app.MapGet("/", () => "Hello World!");
 app.MapGet("/singleton",
     (PingServiceClient pingServiceClient) =>
@@ -52,7 +57,9 @@ app.MapGet("/pureasync", async (ObjectPool<PingServiceClient> pool) =>
     pool.Return(client);
     return data.GetDataResult;
 });
+
 app.MapGet("/healthy", () => "Healthy");
+
 app.Run();
 
 public class PoolPolicy : IPooledObjectPolicy<PingServiceClient>
