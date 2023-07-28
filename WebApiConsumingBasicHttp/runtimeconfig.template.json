@@ -1,13 +1,9 @@
 ﻿{
-  
-    "configProperties": {
-      "System.Threading.ThreadPool.MinThreads": 2,
-      "System.Threading.ThreadPool.MaxThreads": 4,
-      "System.Threading.ThreadPool.Blocking.ThreadsToAddWithoutDelay_ProcCountFactor": 2,
-      "System.GC.Server": true,
-      "System.Net.Http.SocketsHttpHandler.Http2Support": true
-      
-      
-    }
-  
+  "configProperties": {
+    "System.Threading.ThreadPool.MinThreads": 500,
+    "System.Threading.ThreadPool.MaxThreads": 1000,
+    "System.Threading.ThreadPool.Blocking.ThreadsToAddWithoutDelay_ProcCountFactor": 10,
+    "System.GC.Server": true,
+    "System.Net.Http.SocketsHttpHandler.Http2Support": true
+  }
 }

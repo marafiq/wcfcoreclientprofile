@@ -1,17 +1,15 @@
 using Nito.AsyncEx;
+using Serilog;
 
+Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 var builder = WebApplication.CreateBuilder(args);
-builder.Logging.AddConsole();
+builder.Host.UseSerilog();
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.AllowSynchronousIO = true;
     options.ListenAnyIP(80);
 });
-ThreadPool.SetMinThreads(2, 2);
-ThreadPool.SetMaxThreads(4, 4);
-ThreadPool.GetAvailableThreads(out var workerThreads,out var completionPortThreads);
-Console.WriteLine(workerThreads);
-Console.WriteLine(completionPortThreads);
+
 
 builder.Services.AddSingleton<ObjectPool<PingServiceClient>>(_ =>
     new DefaultObjectPool<PingServiceClient>(new PoolPolicy()));
@@ -19,8 +17,8 @@ builder.Services.AddSingleton<ObjectPool<PingServiceClient>>(_ =>
 builder.Services.AddSingleton<PingServiceClient>(_ =>
     new PingServiceClient(new BasicHttpBinding(BasicHttpSecurityMode.None)
         {
-            SendTimeout = TimeSpan.FromMilliseconds(1200),
-            ReceiveTimeout = TimeSpan.FromMilliseconds(1200)
+            SendTimeout = TimeSpan.FromMilliseconds(2000),
+            ReceiveTimeout = TimeSpan.FromMilliseconds(2000)
         },
         new EndpointAddress("http://pingservice/ping")));
 
@@ -29,9 +27,23 @@ var app = builder.Build();
 ClientBase<IPingService>.CacheSetting = CacheSetting.AlwaysOn;
 
 app.MapGet("/", () => "Hello World!");
+
+
+app.MapGet("/threadpoolconfig", (ILogger<Program> logger) =>
+{
+    ThreadPool.GetMinThreads(out var minWorkerThreads, out var minIoThreads);
+    ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxIoThreads);
+    ThreadPool.GetAvailableThreads(out var workerThreads, out var completionPortThreads);
+    logger.LogInformation("Min Workers {MinWorkers} {MinIoThreads} {MaxWorkers} {MaxIoThreads} {AvailableWorkers} {AvailableIoThreads}", minWorkerThreads,
+        minIoThreads, maxWorkerThreads, maxIoThreads, workerThreads, completionPortThreads);
+    return Results.Json(new ThreadPoolConfig(minIoThreads, maxWorkerThreads, maxIoThreads, workerThreads, completionPortThreads));
+});
+
 app.MapGet("/singleton",
     (PingServiceClient pingServiceClient) =>
-        pingServiceClient.GetData(new GetDataRequest(Random.Shared.Next())).GetDataResult);
+    {
+        return pingServiceClient.GetData(new GetDataRequest(Random.Shared.Next())).GetDataResult;
+    });
 app.MapGet("/asyncsingleton",
     (PingServiceClient pingServiceClient) =>
         AsyncContext.Run(() => pingServiceClient.GetData(new GetDataRequest(Random.Shared.Next()))).GetDataResult);
@@ -83,3 +95,7 @@ public class PoolPolicy : IPooledObjectPolicy<PingServiceClient>
         return true;
     }
 }
+public record ThreadPoolConfig(int MinIoThreads,int MaxWorkerThreads,int MaxIoThreads,int WorkerThreads,int CompletionPortThreads);
+//dotnet-counters monitor -n dotnet --counters "Microsoft.AspNetCore.Hosting,System.Net.Http,System.Runtime,Microsoft-AspNetCore-Server-Kestrel,System.Net.Http,System.Net.Sockets,System.Net.Security"
+
+//dotnet-counters monitor -n dotnet --counters "Microsoft.AspNetCore.Hosting,System.Net.Http,System.Runtime" 

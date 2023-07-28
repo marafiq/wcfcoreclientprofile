@@ -2,9 +2,9 @@ namespace PingService;
 
 public class PingService : IPingService
 {
-    public string GetData(int value)
+    public async Task<string> GetData(int value)
     {
-        Thread.Sleep(500);
+        await Task.Delay(30);
         return $"Replying to your Ping - {value} with Pong.";
     }
 }
