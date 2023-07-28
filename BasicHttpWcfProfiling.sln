@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingService", "PingService\PingService.csproj", "{DFB0230D-0CC6-49CC-8401-5FB9220983A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiConsumingBasicHttp", "WebApiConsumingBasicHttp\WebApiConsumingBasicHttp.csproj", "{9CC50CCA-A53F-4A42-BB00-186BBE65CED7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,9 @@ Global
 		{DFB0230D-0CC6-49CC-8401-5FB9220983A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFB0230D-0CC6-49CC-8401-5FB9220983A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFB0230D-0CC6-49CC-8401-5FB9220983A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CC50CCA-A53F-4A42-BB00-186BBE65CED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CC50CCA-A53F-4A42-BB00-186BBE65CED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CC50CCA-A53F-4A42-BB00-186BBE65CED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CC50CCA-A53F-4A42-BB00-186BBE65CED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

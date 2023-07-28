@@ -3,7 +3,7 @@
   "version": "2.0.3",
   "ExtendedData": {
     "inputs": [
-      "http://pingservice:80/ping?singlewsdl"
+      "http://localhost:5002/ping?singlewsdl"
     ],
     "messageContract": true,
     "namespaceMappings": [

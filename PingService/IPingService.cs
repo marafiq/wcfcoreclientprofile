@@ -4,7 +4,7 @@
     public interface IPingService
     {
         [OperationContract]
-        string GetData(int value);
+        Task<string> GetData(int value);
 
         
     }

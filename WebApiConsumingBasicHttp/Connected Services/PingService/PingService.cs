@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BasicHttpWcfBenchmarks.PingService
+namespace WebApiConsumingBasicHttp.PingService
 {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BasicHttpWcfBenchmarks.PingService.IPingService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WebApiConsumingBasicHttp.PingService.IPingService")]
     public interface IPingService
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPingService/GetData", ReplyAction="http://tempuri.org/IPingService/GetDataResponse")]
-        BasicHttpWcfBenchmarks.PingService.GetDataResponse GetData(BasicHttpWcfBenchmarks.PingService.GetDataRequest request);
+        WebApiConsumingBasicHttp.PingService.GetDataResponse GetData(WebApiConsumingBasicHttp.PingService.GetDataRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPingService/GetData", ReplyAction="http://tempuri.org/IPingService/GetDataResponse")]
-        System.Threading.Tasks.Task<BasicHttpWcfBenchmarks.PingService.GetDataResponse> GetDataAsync(BasicHttpWcfBenchmarks.PingService.GetDataRequest request);
+        System.Threading.Tasks.Task<WebApiConsumingBasicHttp.PingService.GetDataResponse> GetDataAsync(WebApiConsumingBasicHttp.PingService.GetDataRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -62,13 +62,13 @@ namespace BasicHttpWcfBenchmarks.PingService
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    public interface IPingServiceChannel : BasicHttpWcfBenchmarks.PingService.IPingService, System.ServiceModel.IClientChannel
+    public interface IPingServiceChannel : WebApiConsumingBasicHttp.PingService.IPingService, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.3")]
-    public partial class PingServiceClient : System.ServiceModel.ClientBase<BasicHttpWcfBenchmarks.PingService.IPingService>, BasicHttpWcfBenchmarks.PingService.IPingService
+    public partial class PingServiceClient : System.ServiceModel.ClientBase<WebApiConsumingBasicHttp.PingService.IPingService>, WebApiConsumingBasicHttp.PingService.IPingService
     {
         
         /// <summary>
@@ -111,12 +111,12 @@ namespace BasicHttpWcfBenchmarks.PingService
         {
         }
         
-        public BasicHttpWcfBenchmarks.PingService.GetDataResponse GetData(BasicHttpWcfBenchmarks.PingService.GetDataRequest request)
+        public WebApiConsumingBasicHttp.PingService.GetDataResponse GetData(WebApiConsumingBasicHttp.PingService.GetDataRequest request)
         {
             return base.Channel.GetData(request);
         }
         
-        public System.Threading.Tasks.Task<BasicHttpWcfBenchmarks.PingService.GetDataResponse> GetDataAsync(BasicHttpWcfBenchmarks.PingService.GetDataRequest request)
+        public System.Threading.Tasks.Task<WebApiConsumingBasicHttp.PingService.GetDataResponse> GetDataAsync(WebApiConsumingBasicHttp.PingService.GetDataRequest request)
         {
             return base.Channel.GetDataAsync(request);
         }
