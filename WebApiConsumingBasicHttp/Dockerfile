@@ -18,6 +18,7 @@ RUN dotnet tool install --global dotnet-monitor --version 7.0.0
 # Install dotnet dump
 RUN dotnet tool install --global dotnet-dump 
 RUN dotnet tool install --global dotnet-counters
+RUN dotnet tool install --global dotnet-stack
 ENV PATH="$PATH:/root/.dotnet/tools"
 RUN echo $PATH
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build

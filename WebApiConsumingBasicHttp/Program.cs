@@ -34,19 +34,22 @@ app.MapGet("/threadpoolconfig", (ILogger<Program> logger) =>
     ThreadPool.GetMinThreads(out var minWorkerThreads, out var minIoThreads);
     ThreadPool.GetMaxThreads(out var maxWorkerThreads, out var maxIoThreads);
     ThreadPool.GetAvailableThreads(out var workerThreads, out var completionPortThreads);
-    logger.LogInformation("Min Workers {MinWorkers} {MinIoThreads} {MaxWorkers} {MaxIoThreads} {AvailableWorkers} {AvailableIoThreads}", minWorkerThreads,
+    logger.LogInformation(
+        "Min Workers {MinWorkers} {MinIoThreads} {MaxWorkers} {MaxIoThreads} {AvailableWorkers} {AvailableIoThreads}",
+        minWorkerThreads,
         minIoThreads, maxWorkerThreads, maxIoThreads, workerThreads, completionPortThreads);
-    return Results.Json(new ThreadPoolConfig(minIoThreads, maxWorkerThreads, maxIoThreads, workerThreads, completionPortThreads));
+    return Results.Json(new ThreadPoolConfig(minWorkerThreads, minIoThreads, maxWorkerThreads, maxIoThreads,
+        workerThreads, completionPortThreads));
 });
 
 app.MapGet("/singleton",
     (PingServiceClient pingServiceClient) =>
-    {
-        return pingServiceClient.GetData(new GetDataRequest(Random.Shared.Next())).GetDataResult;
-    });
+        pingServiceClient.GetData(new GetDataRequest(Random.Shared.Next())).GetDataResult);
+
 app.MapGet("/asyncsingleton",
     (PingServiceClient pingServiceClient) =>
         AsyncContext.Run(() => pingServiceClient.GetData(new GetDataRequest(Random.Shared.Next()))).GetDataResult);
+
 app.MapGet("/pooled", (ObjectPool<PingServiceClient> pool) =>
 {
     var client = pool.Get();
@@ -55,18 +58,18 @@ app.MapGet("/pooled", (ObjectPool<PingServiceClient> pool) =>
     return data.GetDataResult;
 });
 
-app.MapGet("/asyncpooled", (ObjectPool<PingServiceClient> pool) =>
+app.MapGet("/asyncpooled", (PingServiceClient client) =>
 {
-    var client = pool.Get();
+    
     var data = AsyncContext.Run(() => client.GetData(new GetDataRequest(Random.Shared.Next())));
-    pool.Return(client);
+    
     return data.GetDataResult;
 });
-app.MapGet("/pureasync", async (ObjectPool<PingServiceClient> pool) =>
+app.MapGet("/pureasync",  (PingServiceClient client) =>
 {
-    var client = pool.Get();
-    var data = await client.GetDataAsync(new GetDataRequest(Random.Shared.Next()));
-    pool.Return(client);
+    
+    var data =  client.GetDataAsync(new GetDataRequest(Random.Shared.Next())).GetAwaiter().GetResult();
+    
     return data.GetDataResult;
 });
 
@@ -95,7 +98,9 @@ public class PoolPolicy : IPooledObjectPolicy<PingServiceClient>
         return true;
     }
 }
-public record ThreadPoolConfig(int MinIoThreads,int MaxWorkerThreads,int MaxIoThreads,int WorkerThreads,int CompletionPortThreads);
+
+public record ThreadPoolConfig(int MinWorkerThreads, int MinIoThreads, int MaxWorkerThreads, int MaxIoThreads,
+    int WorkerThreads, int CompletionPortThreads);
 //dotnet-counters monitor -n dotnet --counters "Microsoft.AspNetCore.Hosting,System.Net.Http,System.Runtime,Microsoft-AspNetCore-Server-Kestrel,System.Net.Http,System.Net.Sockets,System.Net.Security"
 
 //dotnet-counters monitor -n dotnet --counters "Microsoft.AspNetCore.Hosting,System.Net.Http,System.Runtime" 
